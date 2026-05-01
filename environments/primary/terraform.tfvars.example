@@ -1,0 +1,55 @@
+# =============================================================================
+# MWD Oil Co. — Primary Environment Example Variables
+# =============================================================================
+# Copy this file to terraform.tfvars and fill in your values.
+# DO NOT commit terraform.tfvars to source control.
+# This file contains only placeholder/example values.
+# =============================================================================
+
+environment      = "primary"
+primary_location = "southcentralus"
+
+# -----------------------------------------------------------------------
+# SECURITY — Replace with your actual jump host or VPN gateway CIDR
+# DO NOT use 0.0.0.0/0 — that exposes management ports to the internet
+# -----------------------------------------------------------------------
+allowed_admin_cidr = "10.0.0.0/8"
+
+# -----------------------------------------------------------------------
+# COMPUTE
+# -----------------------------------------------------------------------
+vm_size           = "Standard_B2s"
+vm_admin_username = "mwdadmin"
+
+# Set your SSH public key here — generate with: ssh-keygen -t ed25519
+# ssh_public_key = "ssh-ed25519 AAAAC3Nza... your-key-comment"
+ssh_public_key = "REPLACE_WITH_YOUR_SSH_PUBLIC_KEY"
+
+# -----------------------------------------------------------------------
+# MONITORING
+# -----------------------------------------------------------------------
+log_retention_days = 30
+
+# -----------------------------------------------------------------------
+# STORAGE
+# -----------------------------------------------------------------------
+# Use LRS for cheapest lab cost. Use GRS for real DR replication.
+storage_replication_type = "LRS"
+
+# -----------------------------------------------------------------------
+# NETWORK — Override defaults only if needed
+# Default address scheme:
+#   Hub:           10.0.0.0/16
+#   HQ:            10.10.0.0/16
+#   Corpus Christi: 10.20.0.0/16
+#   Midland:       10.30.0.0/16
+#   Drill Site A:  10.40.0.0/16
+#   Drill Site B:  10.50.0.0/16
+# -----------------------------------------------------------------------
+# Uncomment to override defaults:
+# hub_address_space             = "10.0.0.0/16"
+# hq_address_space              = "10.10.0.0/16"
+# corpus_christi_address_space  = "10.20.0.0/16"
+# midland_address_space         = "10.30.0.0/16"
+# drillsite_a_address_space     = "10.40.0.0/16"
+# drillsite_b_address_space     = "10.50.0.0/16"

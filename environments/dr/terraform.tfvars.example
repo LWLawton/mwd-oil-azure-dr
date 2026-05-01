@@ -1,0 +1,14 @@
+# =============================================================================
+# MWD Oil Co. — DR Environment Example Variables
+# =============================================================================
+# Copy to terraform.tfvars and fill in your values.
+# DO NOT commit terraform.tfvars to source control.
+# =============================================================================
+
+environment = "dr"
+dr_location = "westus3"
+
+# Replace with your VPN or jump host CIDR — never use 0.0.0.0/0
+allowed_admin_cidr = "10.0.0.0/8"
+
+log_retention_days = 30

@@ -1,0 +1,72 @@
+# =============================================================================
+# MWD Oil Co. — .gitignore
+# NEVER commit state files, tfvars, or credentials to this repository
+# =============================================================================
+
+# Terraform state — contains sensitive resource information
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Terraform variables — may contain sensitive values
+*.tfvars
+!*.tfvars.example
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# Terraform crash logs
+crash.log
+crash.*.log
+
+# Terraform override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# SSH private keys — should never be in a repo
+*.pem
+*.key
+id_rsa
+id_ed25519
+*.ppk
+
+# Credentials and secrets
+*.env
+.env
+.env.*
+secrets.json
+credentials.json
+
+# Azure CLI cache
+.azure/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
