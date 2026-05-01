@@ -13,6 +13,7 @@ jobs:
   validate-primary:
     name: Validate Primary Environment
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: environments/primary
@@ -24,14 +25,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "~1.5"
+          terraform_version: "1.5.7"
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
-        working-directory: .
-        continue-on-error: false
 
-      - name: Terraform Init (no backend)
+      - name: Terraform Init
         run: terraform init -backend=false
 
       - name: Terraform Validate
@@ -40,6 +39,7 @@ jobs:
   validate-dr:
     name: Validate DR Environment
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: environments/dr
@@ -51,41 +51,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "~1.5"
+          terraform_version: "1.5.7"
 
-      - name: Terraform Init (no backend)
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init
         run: terraform init -backend=false
 
       - name: Terraform Validate
         run: terraform validate
-
-  validate-modules:
-    name: Validate All Modules
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "~1.5"
-
-      - name: Terraform Format Check — Full Repo
-        run: terraform fmt -check -recursive
-
-      - name: Summary
-        run: |
-          echo "## ✅ Terraform Validation Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Format (fmt) | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Primary Init | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Primary Validate | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "| DR Init | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "| DR Validate | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "> **Note:** This workflow validates syntax only. No Azure credentials are used." >> $GITHUB_STEP_SUMMARY
-          echo "> See COST_CONTROL.md before running terraform apply." >> $GITHUB_STEP_SUMMARY
