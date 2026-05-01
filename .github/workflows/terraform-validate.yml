@@ -1,23 +1,27 @@
-cat > .github/workflows/terraform-validate.yml <<'EOF'
 name: Terraform Validation
 
 on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
 
 jobs:
-  validate-primary:
-    name: Validate Primary Environment
+  validate:
+    name: Validate Terraform
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment:
+          - environments/primary
+          - environments/dr
 
     defaults:
       run:
-        working-directory: environments/primary
+        working-directory: ${{ matrix.environment }}
 
     steps:
       - name: Checkout repository
@@ -28,38 +32,11 @@ jobs:
         with:
           terraform_version: "1.5.7"
 
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+      - name: Terraform Format
+        run: terraform fmt -recursive
 
       - name: Terraform Init
         run: terraform init -backend=false
 
       - name: Terraform Validate
         run: terraform validate
-
-  validate-dr:
-    name: Validate DR Environment
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: environments/dr
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.5.7"
-
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
-
-      - name: Terraform Init
-        run: terraform init -backend=false
-
-      - name: Terraform Validate
-        run: terraform validate
-EOF
