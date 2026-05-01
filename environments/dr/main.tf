@@ -1,10 +1,3 @@
-# =============================================================================
-# MWD Oil Co.
-# Azure Hybrid DR Reference Architecture
-# Disaster Recovery Environment
-# West US 3
-# =============================================================================
-
 terraform {
   required_version = ">= 1.5.0"
 
