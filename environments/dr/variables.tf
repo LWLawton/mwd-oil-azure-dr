@@ -8,6 +8,12 @@ variable "environment" {
   default     = "dr"
 }
 
+variable "dr_resource_count" {
+  description = "Count for DR resources. Set to 0 (default/disabled) or 1 (enabled). Must be changed in terraform.tfvars or via CLI (-var dr_resource_count=1)."
+  type        = number
+  default     = 0
+}
+
 variable "dr_location" {
   description = "DR Azure region"
   type        = string
