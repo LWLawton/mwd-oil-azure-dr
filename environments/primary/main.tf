@@ -1,10 +1,3 @@
-# =============================================================================
-# MWD Oil Co.
-# Azure Hybrid DR Reference Architecture
-# Primary Environment
-# South Central US
-# =============================================================================
-
 terraform {
   required_version = ">= 1.5.0"
 
